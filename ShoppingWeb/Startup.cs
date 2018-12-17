@@ -67,7 +67,7 @@ namespace ShoppingWeb
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{area:Customer}/{controller=Home}/{action=Index}/{id?}");
+                    template: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
