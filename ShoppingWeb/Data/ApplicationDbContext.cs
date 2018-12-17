@@ -14,5 +14,6 @@ namespace ShoppingWeb.Data
         {
         }
         public DbSet<Products> Products { get; set; }
+        public DbSet<ProductTypes> ProductTypes { get; set; }
     }
 }
