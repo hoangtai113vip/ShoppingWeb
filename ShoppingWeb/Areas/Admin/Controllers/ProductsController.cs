@@ -9,6 +9,7 @@ using ShoppingWeb.Models.ViewModel;
 
 namespace ShoppingWeb.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -36,5 +37,4 @@ namespace ShoppingWeb.Areas.Admin.Controllers
             return View(await products.ToListAsync());
         }
     }
-}
 }
