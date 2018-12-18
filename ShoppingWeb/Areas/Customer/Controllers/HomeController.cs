@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShoppingWeb.Data;
+using ShoppingWeb.Extensions;
 using ShoppingWeb.Models;
 
 namespace ShoppingWeb.Controllers
@@ -31,6 +33,22 @@ namespace ShoppingWeb.Controllers
             var product = await _db.Products.Include(m => m.ProductTypes).Include(m => m.SpecialTags).Where(m => m.Id == id).FirstOrDefaultAsync();
 
             return View(product);
+        }
+
+        [HttpPost, ActionName("Details")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DetailsPost(int id)
+        {
+            List<int> lstShoppingCart = HttpContext.Session.Get<List<int>>("ssShoppingCart");
+            if (lstShoppingCart == null)
+            {
+                lstShoppingCart = new List<int>();
+            }
+            lstShoppingCart.Add(id);
+            HttpContext.Session.Set("ssShoppingCart", lstShoppingCart);
+
+            return RedirectToAction("Index", "Home", new { area = "Customer" });
+
         }
 
 
