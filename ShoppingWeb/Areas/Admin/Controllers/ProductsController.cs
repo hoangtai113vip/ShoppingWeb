@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using ShoppingWeb.Data;
+using ShoppingWeb.Models;
 using ShoppingWeb.Models.ViewModel;
 using ShoppingWeb.Utility;
 
