@@ -20,7 +20,7 @@
                                 <label asp-for="@Model.CartItems.FirstOrDefault().ProductName"></label>
                             </th>
                             <th style="text-align:center;">
-                                <label asp-for="@Model.CartItems.FirstOrDefault().Quanlity"></label>
+                                <label asp-for="@Model.CartItems.FirstOrDefault().Quatity"></label>
                             </th>
                             <th style="text-align:center;">
                                 <label asp-for="@Model.CartItems.FirstOrDefault().UnitPrice"></label>
@@ -49,7 +49,7 @@
                                     @Html.DisplayFor(c => item.ProductName)
                                 </td>
                                 <td style="text-align:center">
-                                    @Html.DisplayFor(c => item.Quanlity)
+                                    @Html.DisplayFor(c => item.Quatity)
                                 </td>
                                 <td style="text-align:center">
                                     @Html.DisplayFor(c => item.UnitPrice)
@@ -57,7 +57,7 @@
                                 <td style="text-align:center">
                                     @{
 
-                                        var total = item.Quanlity * item.UnitPrice;
+                                        var total = item.Quatity * item.UnitPrice;
                                         tong = tong + total;
                                     }
                                     @total

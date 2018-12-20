@@ -43,5 +43,43 @@ namespace ShoppingWeb.Areas.Customer.Controllers
             }
             return View(ShoppingCartVM);
         }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("Index")]
+        public IActionResult IndexPost()
+        {
+            List<CartItem> lstCartItems = HttpContext.Session.Get<List<CartItem>>("ssShoppingCart");
+
+            ShoppingCartVM.Appointments.AppointmentDate = ShoppingCartVM.Appointments.AppointmentDate
+                                                           .AddHours(ShoppingCartVM.Appointments.AppointmentTime.Hour)
+                                                           .AddMinutes(ShoppingCartVM.Appointments.AppointmentTime.Minute);
+
+            Appointments appointments = ShoppingCartVM.Appointments;
+            _db.Appointments.Add(appointments);
+            _db.SaveChanges();
+
+            int appointmentId = appointments.Id;
+
+            foreach (var cartItem in lstCartItems)
+            {
+                ProductsSelectedForAppointment productsSelectedForAppointment = new ProductsSelectedForAppointment()
+                {
+                    AppointmentId = appointmentId,
+                    ProductId = cartItem.ProductId,
+                    Quatity =cartItem.Quatity
+                };
+                _db.ProductsSelectedForAppointments.Add(productsSelectedForAppointment);
+
+            }
+            _db.SaveChanges();
+                lstCartItems = new List<CartItem>();
+                HttpContext.Session.Set("ssShoppingCart", lstCartItems);
+
+            return RedirectToAction("Index");
+
+        }
+
     }
 }

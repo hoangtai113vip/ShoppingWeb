@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShoppingWeb.Data;
 
 namespace ShoppingWeb.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181220134355_Add_property_quatity")]
+    partial class Add_property_quatity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -244,7 +246,7 @@ namespace ShoppingWeb.Data.Migrations
 
                     b.Property<int>("ProductId");
 
-                    b.Property<int>("Quatity");
+                    b.Property<int>("Quantity");
 
                     b.HasKey("Id");
 

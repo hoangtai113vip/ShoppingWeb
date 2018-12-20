@@ -19,5 +19,7 @@ namespace ShoppingWeb.Models
 
         [ForeignKey("ProductId")]
         public virtual Products Products { get; set; }
+
+        public int Quatity { get; set; }
     }
 }

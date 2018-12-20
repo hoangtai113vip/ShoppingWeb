@@ -9,7 +9,7 @@ namespace ShoppingWeb.Models
     {
         public int ProductId { get; set; }
         public string ProductName { get; set; }
-        public int Quanlity { get; set; }
+        public int Quatity { get; set; }
         public int UnitPrice { get; set; }
     }
 }
