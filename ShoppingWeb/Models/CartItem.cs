@@ -8,6 +8,7 @@ namespace ShoppingWeb.Models
     public class CartItem
     {
         public int ProductId { get; set; }
+        public virtual Products Products { get; set; } 
         public string ProductName { get; set; }
         public int Quatity { get; set; }
         public int UnitPrice { get; set; }

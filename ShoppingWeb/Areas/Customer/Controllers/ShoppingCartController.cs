@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ShoppingWeb.Data;
 using ShoppingWeb.Extensions;
 using ShoppingWeb.Models;
@@ -102,7 +103,28 @@ namespace ShoppingWeb.Areas.Customer.Controllers
 
             HttpContext.Session.Set("ssShoppingCart", lstCartItems);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("" +
+                "" +
+                "");
+        }
+
+        //Get 
+        public IActionResult AppointmentConfirmation(int id)
+        {
+            ShoppingCartVM.Appointments = _db.Appointments.Where(a => a.Id == id).FirstOrDefault();
+            List<ProductsSelectedForAppointment> objProdList = _db.ProductsSelectedForAppointments.Where(p => p.AppointmentId == id).ToList();
+
+            foreach (ProductsSelectedForAppointment prodAptObj in objProdList)
+            {
+                CartItem cartItem = new CartItem()
+                {
+                    Products = _db.Products.Include(p => p.ProductTypes).Include(p => p.SpecialTags).Where(p => p.Id == prodAptObj.ProductId).FirstOrDefault(),
+                    Quatity = prodAptObj.Quatity
+                };
+                ShoppingCartVM.CartItems.Add(cartItem);
+            }
+
+            return View(ShoppingCartVM);
         }
 
 
