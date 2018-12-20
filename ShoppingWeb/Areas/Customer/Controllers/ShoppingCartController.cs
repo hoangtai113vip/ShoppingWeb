@@ -78,7 +78,7 @@ namespace ShoppingWeb.Areas.Customer.Controllers
                 lstCartItems = new List<CartItem>();
                 HttpContext.Session.Set("ssShoppingCart", lstCartItems);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("AppointmentConfirmation", "ShoppingCart", new { Id = appointmentId });
 
         }
         // remove product in cart
@@ -103,9 +103,7 @@ namespace ShoppingWeb.Areas.Customer.Controllers
 
             HttpContext.Session.Set("ssShoppingCart", lstCartItems);
 
-            return RedirectToAction("" +
-                "" +
-                "");
+            return RedirectToAction(nameof(Index));
         }
 
         //Get 

@@ -1,4 +1,4 @@
-﻿@model List<ShoppingWeb.Models.Products>
+﻿@model List<ShoppingWeb.Models.CartItem>
 
     @*
         For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -10,16 +10,16 @@
         <tr class="table-info">
             <th style="text-align:center; width:20%"></th>
             <th style="text-align:center;">
-                <label asp-for="@Model.FirstOrDefault().ProductId"></label>
+                <label asp-for="@Model.FirstOrDefault().Products.Name"></label>
             </th>
             <th style="text-align:center;">
-                <label asp-for="@Model.FirstOrDefault().ProductName"></label>
+                <label asp-for="@Model.FirstOrDefault().Products.ProductTypes.Name"></label>
             </th>
             <th style="text-align:center;">
                 <label asp-for="@Model.FirstOrDefault().Quatity"></label>
             </th>
             <th style="text-align:center;">
-                <label asp-for="@Model.FirstOrDefault().UnitPrice"></label>
+                <label asp-for="@Model.FirstOrDefault().Products.Price"></label>
             </th>
             <th style="text-align:center;"></th>
         </tr>
@@ -27,21 +27,21 @@
      {
         <tr style="padding:50px;">
             <td>
-                <a asp-area="Customer" asp-controller="Home" asp-action="Details" asp-route-id="@item.ProductId">
-                    <img src="@item.Product.Image" width="100%" style="margin:auto; display:block; border-radius:5px; border:1px solid #bbb9b9;" />
+                <a asp-area="Customer" asp-controller="Home" asp-action="Details" asp-route-id="@item.Products.Id">
+                    <img src="@item.Products.Image" width="100%" style="margin:auto; display:block; border-radius:5px; border:1px solid #bbb9b9;" />
                 </a>
             </td>
             <td style="text-align:center">
-                @Html.DisplayFor(c => item.ProductId)
+                @Html.DisplayFor(c => item.Products.Name)
             </td>
             <td style="text-align:center">
-                @Html.DisplayFor(c => item.Name)
+                @Html.DisplayFor(c => item.Products.ProductTypes.Name)
             </td>
             <td style="text-align:center">
                 @Html.DisplayFor(c => item.Quatity)
             </td>
             <td style="text-align:center">
-                @Html.DisplayFor(c => item.UnitPrice)
+                @Html.DisplayFor(c => item.Products.Price)
             </td>
             <td style="text-align:center">
                 <button type="submit" class="btn btn-danger" asp-action="remove" asp-route-id="@item.ProductId">
