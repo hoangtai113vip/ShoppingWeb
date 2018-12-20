@@ -44,14 +44,15 @@ namespace ShoppingWeb.Controllers
 
         [HttpPost, ActionName("Details")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DetailsPost(int id)
+        public async Task<IActionResult> DetailsPost(int id,HomeViewModel homeVM)
         {
+            homeVM.CartItem.ProductName = homeVM.Products.Name;
             List<CartItem> lstShoppingCart = HttpContext.Session.Get<List<CartItem>>("ssShoppingCart");
             if (lstShoppingCart == null)
             {
                 lstShoppingCart = new List<CartItem>();
             }
-            lstShoppingCart.Add(HomeVM.CartItem);
+            lstShoppingCart.Add(homeVM.CartItem);
             HttpContext.Session.Set("ssShoppingCart", lstShoppingCart);
 
             return RedirectToAction("Index", "Home", new { area = "Customer" });
@@ -69,12 +70,18 @@ namespace ShoppingWeb.Controllers
 
         public IActionResult Remove(int id)
         {
-            List<int> lstShoppingCart = HttpContext.Session.Get<List<int>>("ssShoppingCart");
+            List<CartItem> lstShoppingCart = HttpContext.Session.Get<List<CartItem>>("ssShoppingCart");
             if (lstShoppingCart.Count > 0)
             {
-                if (lstShoppingCart.Contains(id))
+                List<int> arr = new List<int>();
+                foreach(var item in lstShoppingCart)
                 {
-                    lstShoppingCart.Remove(id);
+                    arr.Add(item.ProductId);
+                }
+                if (arr.Contains(id))
+                {
+                    var product = lstShoppingCart.Where(m => m.ProductId == id).FirstOrDefault();
+                    lstShoppingCart.Remove(product);
                 }
             }
 

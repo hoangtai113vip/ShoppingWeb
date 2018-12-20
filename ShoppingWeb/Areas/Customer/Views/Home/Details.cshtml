@@ -56,7 +56,8 @@
                     <label asp-for="CartItem.Quanlity"></label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="CartItem.Quanlity" id="demo2"  value="1" name="demo2" class=" form-control">
+                    @*<input asp-for="CartItem.Quanlity" class=" form-control">*@
+                    <input  asp-for="CartItem.Quanlity" id="demo2" class=" form-control">
 
                     <input asp-for="CartItem.ProductId" class="form-control" value="@Model.Products.Id" hidden />
                     <input asp-for="CartItem.UnitPrice" class="form-control" value="@Model.Products.Price" hidden />
@@ -78,9 +79,21 @@
                 </div>
                 <div class="col-8">
                     @{
+
+                        List<int> arr = new List<int>();
                         bool isInBag = false;
                         List<CartItem> lstCart = HttpContextAccessor.HttpContext.Session.Get<List<CartItem>>("ssShoppingCart");
-                        if (lstCart != null && lstCart.Contains(Model.CartItem))
+                        if (lstCart != null)
+                        {
+                            foreach (var i in lstCart)
+                            {
+                                arr.Add(i.ProductId);
+
+                            }
+
+                        }
+
+                        if (arr != null && arr.Contains(Model.Products.Id))
                         {
                             isInBag = true;
 
@@ -124,12 +137,14 @@
 
 @section Scripts{
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $("input[id='demo2']").TouchSpin({
+            min: 1,
+            max:1000,
+            stepinterval: 50,
+            maxboostedstep: 10000000
+        });
+    </script>
 
-            $("input[name='demo2']").TouchSpin({
-                min: 1,
-                max: 1000,
-                stepinterval: 50,
-                maxboostedstep: 10000000
-            });
     
 }

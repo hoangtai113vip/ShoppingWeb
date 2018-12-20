@@ -1,0 +1,84 @@
+﻿
+@model ShoppingWeb.Models.ViewModel.ShoppingCartViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<form method="post">
+    <br /><br />
+    <h2 class="text-info">Your Shopping Cart</h2>
+    <br />
+    @if (Model.CartItems.Count > 0)
+    {
+        <div class="container border border-secondary rounded" style="padding:15px;">
+            <div class="row">
+                <div class="col-8" style="border-right:1px solid #bbb9b9;">
+                    <table class="table table-striped" width="100%">
+                        <tr class="table-info">
+
+                            <th style="text-align:center;">
+                                <label asp-for="@Model.CartItems.FirstOrDefault().ProductName"></label>
+                            </th>
+                            <th style="text-align:center;">
+                                <label asp-for="@Model.CartItems.FirstOrDefault().Quanlity"></label>
+                            </th>
+                            <th style="text-align:center;">
+                                <label asp-for="@Model.CartItems.FirstOrDefault().UnitPrice"></label>
+                            </th>
+                            <th style="text-align:center;">
+                                <label>Total</label>
+                            </th>
+                            <th style="text-align:center;">
+                               
+                            </th>
+
+
+                        </tr>
+                        @{ 
+                            var tong = 0;
+                        }
+                        @foreach (var item in Model.CartItems)
+                        {
+                        <tr style="padding:50px;">
+                            @*<td>
+            <a asp-area="Customer" asp-controller="Home" asp-action="Details" asp-route-id="@item.Id">
+                <img src="@item.Image" width="100%" style="margin:auto; display:block; border-radius:5px; border:1px solid #bbb9b9;" />
+            </a>
+        </td>*@
+                            <td style="text-align:center">
+                                @Html.DisplayFor(c => item.ProductName)
+                            </td>
+                            <td style="text-align:center">
+                                @Html.DisplayFor(c => item.Quanlity)
+                            </td>
+                            <td style="text-align:center">
+                                @Html.DisplayFor(c => item.UnitPrice)
+                            </td>
+                            <td style="text-align:center">
+                                @{ 
+
+                                    var total = item.Quanlity * item.UnitPrice;
+                                    tong = tong + total;
+                                }
+                                @total
+                            </td>
+
+                            <td style="text-align:center">
+                                <button type="submit" class="btn btn-danger" asp-action="remove" asp-route-id="@item.ProductId">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        }
+                    </table>
+
+                    <div>
+                        tong: @tong
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+</form>

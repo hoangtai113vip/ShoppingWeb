@@ -39,6 +39,7 @@ namespace ShoppingWeb.Areas.Customer.Controllers
                     //Products prod = _db.Products.Include(p => p.SpecialTags).Include(p => p.ProductTypes).Where(p => p.Id == cartItem).FirstOrDefault();
                     ShoppingCartVM.CartItems.Add(cartItem);
                 }
+                
             }
             return View(ShoppingCartVM);
         }
