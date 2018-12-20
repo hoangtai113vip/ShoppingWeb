@@ -80,6 +80,31 @@ namespace ShoppingWeb.Areas.Customer.Controllers
             return RedirectToAction("Index");
 
         }
+        // remove product in cart
+        public IActionResult Remove(int id)
+        {
+            List<CartItem> lstCartItems = HttpContext.Session.Get<List<CartItem>>("ssShoppingCart");
+
+            if (lstCartItems.Count > 0)
+            {
+                List<int> arr = new List<int>();
+                foreach(var item in lstCartItems)
+                {
+                    arr.Add(item.ProductId);
+
+                }
+                if (arr.Contains(id))
+                {
+                    var cartItem = lstCartItems.Where(m => m.ProductId == id).FirstOrDefault();
+                    lstCartItems.Remove(cartItem);
+                }
+            }
+
+            HttpContext.Session.Set("ssShoppingCart", lstCartItems);
+
+            return RedirectToAction(nameof(Index));
+        }
+
 
     }
 }
