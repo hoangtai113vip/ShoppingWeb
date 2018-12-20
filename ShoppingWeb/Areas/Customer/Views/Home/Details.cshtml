@@ -1,5 +1,5 @@
 ﻿
-@model ShoppingWeb.Models.Products
+@model ShoppingWeb.Models.ViewModel.HomeViewModel
 @using ShoppingWeb.Extensions
 
 @using Microsoft.AspNetCore.Http
@@ -19,45 +19,57 @@
         <div class="col-8">
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="Name"></label>
+                    <label asp-for="Products.Name"></label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="Name" class="form-control" readonly />
+                    <input asp-for="Products.Name" class="form-control" readonly />
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="ShadeColor"></label>
+                    <label asp-for="Products.ShadeColor"></label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="ShadeColor" class="form-control" readonly />
+                    <input asp-for="Products.ShadeColor" class="form-control" readonly />
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="Price"></label>
+                    <label asp-for="Products.Price"></label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="Price" class="form-control" readonly />
+                    <input asp-for="Products.Price" class="form-control" readonly />
                 </div>
             </div>
 
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="ProductTypes"></label>
+                    <label asp-for="Products.ProductTypes"></label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="ProductTypes.Name" class="form-control" readonly />
+                    <input asp-for="Products.ProductTypes.Name" class="form-control" readonly />
                 </div>
             </div>
-            @if (!Model.SpecialTags.Name.Equals("--None--"))
+            @*them so luong sản phẩm*@
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="CartItem.Quanlity"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="CartItem.Quanlity" id="demo2"  value="1" name="demo2" class=" form-control">
+
+                    <input asp-for="CartItem.ProductId" class="form-control" value="@Model.Products.Id" hidden />
+                    <input asp-for="CartItem.UnitPrice" class="form-control" value="@Model.Products.Price" hidden />
+                </div>
+            </div>
+            @if (!Model.Products.SpecialTags.Name.Equals("--None--"))
             {
                 <div class="form-group row">
                     <div class="col-4">
-                        <label asp-for="SpecialTags"></label>
+                        <label asp-for="Products.SpecialTags"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="SpecialTags.Name" class="form-control" readonly />
+                        <input asp-for="Products.SpecialTags.Name" class="form-control" readonly />
                     </div>
                 </div>
             }
@@ -67,8 +79,8 @@
                 <div class="col-8">
                     @{
                         bool isInBag = false;
-                        List<int> lstCart = HttpContextAccessor.HttpContext.Session.Get<List<int>>("ssShoppingCart");
-                        if (lstCart != null && lstCart.Contains(Model.Id))
+                        List<CartItem> lstCart = HttpContextAccessor.HttpContext.Session.Get<List<CartItem>>("ssShoppingCart");
+                        if (lstCart != null && lstCart.Contains(Model.CartItem))
                         {
                             isInBag = true;
 
@@ -77,12 +89,12 @@
 
                     @if (isInBag)
                     {
-                        <button type="submit" value="Remove From Bag" asp-action="remove" asp-route-id="@Model.Id" class="btn btn-danger form-control">Remove From Bag</button>
+                        <button type="submit" value="Remove From Bag" asp-action="remove" asp-route-id="@Model.Products.Id" class="btn btn-danger form-control">Remove From Bag</button>
 
                     }
                     else
                     {
-                        <button type="submit" value="Add to Bag" asp-route-id="@Model.Id" class="btn btn-primary form-control">Add To Bag</button>
+                        <button type="submit" value="Add to Bag" asp-route-id="@Model.Products.Id" class="btn btn-primary form-control">Add To Bag</button>
                     }
                 </div>
 
@@ -92,9 +104,9 @@
 
         </div>
         <div class="col-3">
-            <img src="@Model.Image" width="100%" style="border-radius:5px; border:1px solid #bbb9b9;" />
+            <img src="@Model.Products.Image" width="100%" style="border-radius:5px; border:1px solid #bbb9b9;" />
             <br /><br />
-            @if (Model.Available)
+            @if (Model.Products.Available)
             {
                 <img src="~/images/inStock.png" width="50%" />
 
@@ -112,4 +124,12 @@
 
 @section Scripts{
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+            $("input[name='demo2']").TouchSpin({
+                min: 1,
+                max: 1000,
+                stepinterval: 50,
+                maxboostedstep: 10000000
+            });
+    
 }

@@ -16,5 +16,7 @@ namespace ShoppingWeb.Data
         public DbSet<Products> Products { get; set; }
         public DbSet<ProductTypes> ProductTypes { get; set; }
         public DbSet<SpecialTags> SpecialTags { get; set; }
+        public DbSet<Appointments> Appointments { get; set; }
+        public DbSet<ProductsSelectedForAppointment> ProductsSelectedForAppointments { get; set; }
     }
 }
